@@ -1,0 +1,89 @@
+﻿<script>
+
+        function GetCafeCredit(resultsElement, studentId) {
+            $.ajax({
+                url: '/home/GetCafeCredit',
+                type: 'POST',
+                dataType: 'json',
+                //data: json,
+                data: '{ studentId:' + studentId + '}',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $(resultsElement).html(data);
+                },
+                fail: function (msg) {
+                    $(resultsElement).html("We're sorry: The cafe credit for this student could not be retrieved at this time.");
+                }
+            });
+        }
+        function RegisterClass(resultsElement, teachingClassId, studentId) {
+            $.ajax({
+                url: '/home/RegisterClass',
+                type: 'POST',
+                dataType: 'json',
+                //data: json,
+                data: '{ teachingClassId:' + teachingClassId
+                            + ', studentId:' + studentId
+                      + '}',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $(resultsElement).html(data);
+                },
+                fail: function (msg) {
+                    $(resultsElement).html("We're sorry: The cafe credit for this student could not be retrieved at this time.");
+                }
+            });
+        }
+
+        function GetTranscript(resultsElement, studentId) {
+            $.ajax({
+                url: '/home/GetTranscript',
+                type: 'POST',
+                dataType: 'json',
+                //data: json,
+                data: '{ studentId:' + studentId + '}',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var TranscriptId = "Student Transcript Id: " + data.TranscriptId + "<br />";
+                    var TranscriptName = "Transcript Name: " + data.TranscriptName + "<br />";
+                    var DegreeName = "Degree Name: " + data.DegreeName + "<br />";
+                    var DegreeLevel = "Degree Level: " + data.DegreeLevel + "<br />";
+                    var GPA = "GPA" + data.GPA + "<br />";
+                    var html = TranscriptId + TranscriptName + DegreeName + DegreeLevel + GPA;
+                    $(resultsElement).html(html);
+                },
+                fail: function (msg) {
+                    $(resultsElement).html("We're sorry: The transcript for this student could not be retrieved at this time.");
+                }
+            });
+        }
+
+</script>
+
+<form>
+    <section>
+        <h3>Undergrad</h3>
+        <input type="button" value="Get cafe credit for Undergrad" onclick="javascript: GetCafeCredit('#undergradResults', 1);" />
+        <input type="button" value="Register class for Undergrad" onclick="javascript: RegisterClass('#undergradResults', 4, 1);" />
+        <input type="button" value="Get transcript for Undergrad" onclick="javascript: GetTranscript('#undergradResults', 1);" />
+        <div id="undergradResults"></div>
+    </section>
+    <hr />
+    <section>
+        <h3>Graduate</h3>
+        <input type="button" value="Get cafe credit for Graduate" onclick="javascript: GetCafeCredit('#graduateResults', 2);"  />
+        <input type="button" value="Register class for Graduate" onclick="javascript: RegisterClass('#graduateResults', 5, 2);"  />
+        <input type="button" value="Get transcript for Graduate" onclick="javascript: GetTranscript('#graduateResults', 2);" />
+        <div id="graduateResults"></div>
+    </section>
+    <hr />
+    <section>
+        <h3>Doctorate</h3>
+        <input type="button" value="Get cafe credit for Doctorate" onclick="javascript: GetCafeCredit('#doctorateResults', 3);"  />
+        <input type="button" value="Register class for Doctorate" onclick="javascript: RegisterClass('#doctorateResults', 6, 3);"  />
+        <input type="button" value="Get transcript for Doctorate" onclick="javascript: GetTranscript('#doctorateResults', 3);" />
+        <div id="doctorateResults"></div>
+    </section>
+    <hr />
+
+</form>
